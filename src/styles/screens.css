@@ -1,0 +1,39 @@
+.screen {
+    padding: 24px;
+}
+
+.game-top {
+    margin-top: 10px;
+    display: grid;
+    justify-content: center;
+}
+
+.game-top {
+    margin: 10px 0 6px;
+    display: grid;
+    justify-content: center;
+}
+
+.game-top {
+    margin: 12px 0 4px;
+    display: grid;
+    justify-content: center;
+}
+
+.card-box {
+    margin-top: 12px;
+    /* pulls card closer to deck */
+}
+
+.game-top::after {
+    content: "";
+    width: 2px;
+    height: 14px;
+    margin: 6px auto 0;
+    background: linear-gradient(to bottom,
+            rgba(255, 255, 255, 0.25),
+            rgba(255, 255, 255, 0.05));
+    border-radius: 2px;
+}
+
+

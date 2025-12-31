@@ -1,0 +1,16 @@
+:root {
+    /* Colors */
+    --bg-root:
+        --bg-surface: --bg-overlay: --text-primary: --text-secondary: --text-muted: --accent-primary: --accent-danger: --accent-warning: --accent-success;
+
+    /* Spacing */
+    --space-1:
+        --space-2: --space-3: --space-4: --space-5: --space-6:
+        /* Radius */
+        --radius-sm: --radius-md: --radius-lg:
+        /* Motion */
+        --dur-instant: --dur-fast: --dur-reveal: --dur-slow;
+
+    --ease-pop:
+        --ease-smooth;
+}
