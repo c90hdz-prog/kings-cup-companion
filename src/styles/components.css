@@ -175,3 +175,63 @@ button:disabled {
 .deck-stack__pile.reacting {
     transform: translateY(-2px) scale(0.985);
 }
+
+.rule-box {
+    margin-top: 14px;
+    padding: 14px 16px;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    text-align: center;
+}
+
+.rule-title {
+    font-size: 20px;
+    font-weight: 800;
+    margin-bottom: 6px;
+}
+
+.rule-joke {
+    font-size: 14px;
+    opacity: 0.85;
+    line-height: 1.35;
+}
+
+.overlay-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.66);
+    backdrop-filter: blur(6px);
+    z-index: 1000;
+}
+
+.overlay-card {
+    position: fixed;
+    top: 50%;
+    left: max(16px, env(safe-area-inset-left));
+    right: max(16px, env(safe-area-inset-right));
+    transform: translateY(-50%);
+
+    max-width: 360px;
+    margin: 0 auto;
+    /* centers within left/right bounds */
+
+    padding: 20px 18px;
+    border-radius: 18px;
+
+    background: rgba(25, 25, 30, 0.94);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    z-index: 1001;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.overlay-card h2 {
+    margin: 0 0 8px;
+}
+
+.overlay-card p {
+    opacity: 0.85;
+    margin: 0 0 14px;
+}
+

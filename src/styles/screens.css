@@ -36,4 +36,8 @@
     border-radius: 2px;
 }
 
-
+.screen.game {
+    padding-left: max(16px, env(safe-area-inset-left));
+    padding-right: max(16px, env(safe-area-inset-right));
+    box-sizing: border-box;
+}

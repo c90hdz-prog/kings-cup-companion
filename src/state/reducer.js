@@ -1,5 +1,17 @@
 import { initialState } from "./initialState.js";
-import { APP_INIT, START_GAME, DRAW_REQUESTED, DRAW_RESOLVED, REVEAL_FRONT, REVEAL_COMPLETE } from "./actions.js";
+import {
+  APP_INIT,
+  START_GAME,
+  DRAW_REQUESTED,
+  DRAW_RESOLVED,
+  REVEAL_FRONT,
+  REVEAL_COMPLETE,
+  FINAL_KING_TRIGGERED,
+  RESTART_SAME_PLAYERS
+} from "./actions.js";
+
+
+import { resolveRule } from "../engine/resolver.js";
 
 
 import { createShuffledDeck } from "../engine/deck.js";
@@ -47,7 +59,8 @@ export function reducer(state = initialState, action) {
             ruleInputOpen: false,
             rulesListOpen: false,
             confirmRestartOpen: false,
-            deckExhaustedOpen: false
+            deckExhaustedOpen: false,
+            finalKingOpen: false,
           },
           animation: { inputLocked: false, isRevealing: false, revealStage: "front" },
           pendingChoice: { type: null, cardId: null }
@@ -77,13 +90,25 @@ case DRAW_REQUESTED: {
 
 case DRAW_RESOLVED: {
   const { card, remaining, discard } = action.payload;
+  const rule = resolveRule(card);
+
+  const isKing = card?.rank === "K";
+  const kingsDrawn = (state.game.progress?.kingsDrawn ?? 0) + (isKing ? 1 : 0);
 
   return {
     ...state,
     game: {
       ...state.game,
       deck: { remaining, discard },
-      turn: { ...state.game.turn, currentCard: card }
+      progress: {
+        ...state.game.progress,
+        kingsDrawn
+      },
+      turn: {
+        ...state.game.turn,
+        currentCard: card,
+        resolved: rule
+      }
     },
     ui: {
       ...state.ui,
@@ -96,6 +121,7 @@ case DRAW_RESOLVED: {
     }
   };
 }
+
 case REVEAL_FRONT: {
   return {
     ...state,
@@ -125,6 +151,57 @@ case REVEAL_COMPLETE: {
   };
 }
 
+case FINAL_KING_TRIGGERED: {
+  return {
+    ...state,
+    ui: {
+      ...state.ui,
+      overlays: {
+        ...state.ui.overlays,
+        finalKingOpen: true
+      },
+      animation: {
+        ...state.ui.animation,
+        inputLocked: true
+      }
+    }
+  };
+}
+
+case RESTART_SAME_PLAYERS: {
+  const deck = createShuffledDeck();
+
+  return {
+    ...state,
+    game: {
+      ...state.game,
+      deck: {
+        remaining: deck,
+        discard: []
+      },
+      progress: { kingsDrawn: 0 },
+      turn: {
+        currentCard: null,
+        resolved: null,
+        joke: null,
+        actorPlayerId: null,
+        targetPlayerId: null
+      }
+    },
+    ui: {
+      ...state.ui,
+      overlays: {
+        ...state.ui.overlays,
+        finalKingOpen: false
+      },
+      animation: {
+        inputLocked: false,
+        isRevealing: false,
+        revealStage: "front"
+      }
+    }
+  };
+}
 
 
     default:
