@@ -15,9 +15,7 @@ export function getState() {
 
 export function dispatch(action) {
   state = reducer(state, action);
-
-  // notify all subscribers
-  for (const fn of listeners) fn(state);
+  listeners.forEach((fn) => fn(state));
 }
 
 export function subscribe(fn) {

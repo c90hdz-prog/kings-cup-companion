@@ -1,9 +1,20 @@
-import { initStore, dispatch } from "./state/store.js";
+import { initStore, dispatch, subscribe } from "./state/store.js";
 import { renderApp } from "./ui/render.js";
 import { APP_INIT } from "./state/actions.js";
 
+// Init store first
+initStore();
 
-// Prevent pinch-zoom / gesture zoom (useful for "app-like" feel)
+// Re-render on every state change
+subscribe(() => renderApp());
+
+// First paint
+renderApp();
+
+// App lifecycle start
+dispatch({ type: APP_INIT });
+
+/* Prevent pinch-zoom / gesture zoom (app-like feel) */
 document.addEventListener(
   "touchmove",
   (e) => {
@@ -13,9 +24,3 @@ document.addEventListener(
 );
 
 document.addEventListener("gesturestart", (e) => e.preventDefault());
-
-
-
-initStore();
-renderApp();
-dispatch({ type: APP_INIT });

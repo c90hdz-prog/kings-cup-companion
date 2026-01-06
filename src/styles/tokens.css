@@ -1,16 +1,57 @@
 :root {
-    /* Colors */
-    --bg-root:
-        --bg-surface: --bg-overlay: --text-primary: --text-secondary: --text-muted: --accent-primary: --accent-danger: --accent-warning: --accent-success;
+    /* =========================
+     Colors
+  ========================== */
 
-    /* Spacing */
-    --space-1:
-        --space-2: --space-3: --space-4: --space-5: --space-6:
-        /* Radius */
-        --radius-sm: --radius-md: --radius-lg:
-        /* Motion */
-        --dur-instant: --dur-fast: --dur-reveal: --dur-slow;
+    /* App backgrounds */
+    --bg-root: #0b0c10;
+    --bg-surface: rgba(22, 22, 28, 0.94);
+    --bg-surface-soft: rgba(255, 255, 255, 0.06);
+    --bg-overlay: rgba(0, 0, 0, 0.66);
 
-    --ease-pop:
-        --ease-smooth;
+    /* Text */
+    --text-primary: #f5f6ff;
+    --text-secondary: rgba(245, 246, 255, 0.78);
+    --text-muted: rgba(245, 246, 255, 0.55);
+
+    /* Accents */
+    --accent-primary: #7aa2ff;
+    --accent-danger: #ff6b6b;
+    --accent-warning: #ffc65c;
+    --accent-success: #5dd39e;
+
+    /* Borders */
+    --border-soft: rgba(255, 255, 255, 0.12);
+    --border-strong: rgba(255, 255, 255, 0.18);
+
+    /* Shadows */
+    --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.35);
+
+    /* =========================
+     Spacing
+  ========================== */
+    --space-1: 6px;
+    --space-2: 10px;
+    --space-3: 14px;
+    --space-4: 18px;
+    --space-5: 24px;
+    --space-6: 32px;
+
+    /* =========================
+     Radius
+  ========================== */
+    --radius-sm: 12px;
+    --radius-md: 16px;
+    --radius-lg: 18px;
+
+    /* =========================
+     Motion
+  ========================== */
+    --dur-instant: 0ms;
+    --dur-fast: 120ms;
+    --dur-reveal: 240ms;
+    --dur-slow: 420ms;
+
+    --ease-pop: cubic-bezier(0.2, 0.9, 0.2, 1);
+    --ease-smooth: cubic-bezier(0.2, 0.6, 0.2, 1);
 }

@@ -1,19 +1,27 @@
 html,
 body {
+    width: 100%;
     height: 100%;
-    margin: 0;
-    font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-    touch-action: manipulation;
+    overflow: hidden;
+    overscroll-behavior: none;
 }
-
-body {
-    background: #0f0f12;
-    color: #f5f6ff;
+* {
+    box-sizing: border-box;
 }
 
 #app {
-    min-height: 100%;
+    height: 100%;
 }
+body {
+    background: var(--bg-root);
+    color: var(--text-primary);
+    touch-action: manipulation;
+    position: relative;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+
 .rotate-lock {
     display: none;
 }
@@ -27,8 +35,9 @@ body {
         place-items: center;
         text-align: center;
         padding: 24px;
-        background: rgba(15, 15, 18, 0.96);
-        color: #f5f6ff;
+        background: rgba(11, 12, 16, 0.96);
+            /* or var(--bg-root) but keep opacity */
+        color: var(--text-primary);
     }
 
     .rotate-lock .hint {
@@ -37,3 +46,12 @@ body {
         font-size: 14px;
     }
 }
+p {
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+.muted {
+    color: var(--text-muted);
+}
+

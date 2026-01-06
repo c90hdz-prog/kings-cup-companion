@@ -1,25 +1,11 @@
-// src/ui/render.js
-import { subscribe, getState } from "../state/store.js";
-import { renderHome } from "./screens/home.js";
-import { renderGame } from "./screens/game.js";
-
-const root = document.getElementById("app");
-
-function doRender(state) {
-  root.innerHTML = "";
-
-  if (state.app.phase === "playing") {
-    root.appendChild(renderGame(state));
-  } else {
-    root.appendChild(renderHome(state));
-  }
-}
+import { getState } from "../state/store.js";
+import { route } from "./router.js";
 
 export function renderApp() {
-  // Render immediately
-  doRender(getState());
-  
+  const state = getState();          // ✅ THIS is what you’re missing
+  const root = document.querySelector("#app");
 
-  // Re-render on every state update
-  subscribe((state) => doRender(state));
+  root.innerHTML = "";
+  root.appendChild(route(state));
 }
+

@@ -1,43 +1,291 @@
+/* screens.css — single source of truth for screen layout */
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+#app {
+    width: 100%;
+    overflow-x: hidden;
+}
+
+/* Apply the same centered phone column + side padding to ALL screens */
 .screen {
-    padding: 24px;
-}
+    width: 100%;
+    max-width: 390px;
+    margin: 0 auto;
 
-.game-top {
-    margin-top: 10px;
-    display: grid;
-    justify-content: center;
-}
-
-.game-top {
-    margin: 10px 0 6px;
-    display: grid;
-    justify-content: center;
-}
-
-.game-top {
-    margin: 12px 0 4px;
-    display: grid;
-    justify-content: center;
-}
-
-.card-box {
-    margin-top: 12px;
-    /* pulls card closer to deck */
-}
-
-.game-top::after {
-    content: "";
-    width: 2px;
-    height: 14px;
-    margin: 6px auto 0;
-    background: linear-gradient(to bottom,
-            rgba(255, 255, 255, 0.25),
-            rgba(255, 255, 255, 0.05));
-    border-radius: 2px;
-}
-
-.screen.game {
     padding-left: max(16px, env(safe-area-inset-left));
     padding-right: max(16px, env(safe-area-inset-right));
+    padding-top: max(18px, env(safe-area-inset-top));
+    padding-bottom: max(18px, env(safe-area-inset-bottom));
+
     box-sizing: border-box;
 }
+
+/* GAME: center the whole column */
+.screen.game {
+    width: 100%;
+    max-width: 390px;
+    /* the “phone column” */
+    margin: 0 auto;
+    /* <-- true centering */
+    height: 100svh;
+
+    padding-top: max(18px, env(safe-area-inset-top));
+    padding-bottom: max(18px, env(safe-area-inset-bottom));
+    padding-left: max(16px, env(safe-area-inset-left));
+    padding-right: max(16px, env(safe-area-inset-right));
+
+    display: grid;
+    grid-template-rows: auto auto minmax(0, 1fr) auto auto;
+    gap: 14px;
+
+    overflow-y: auto;
+    overscroll-behavior: none;
+}
+
+/* Children now just fill the column */
+.screen.game>h1,
+.game-meta,
+.card-stage,
+.tap-hint,
+.rule-box {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.game-meta {
+    display: grid;
+    gap: 6px;
+}
+.game-meta p {
+    margin: 0;
+    /* IMPORTANT: remove default p spacing */
+    line-height: 1.25;
+    /* tighter */
+}
+/* Card stage */
+.card-stage {
+    min-height: 0;
+    overflow: hidden;
+    position: relative;
+    display: grid;
+    place-items: center;
+}
+
+/* Card sizing belongs HERE, not components.css */
+.screen.game .card-box {
+    width: 100%;
+    aspect-ratio: 2 / 3;
+    max-height: 58svh;
+    font-size: clamp(40px, 8vw, 58px);
+}
+
+/* Hint + rule */
+.tap-hint {
+    text-align: center;
+    opacity: 0.85;
+    margin-top: -6px;
+}
+
+.rule-box {
+    text-align: center;
+}
+
+@media (max-height: 740px) {
+    .screen.game .card-box {
+        max-height: 52svh;
+    }
+}
+.card-box {
+    width: 100%;
+    aspect-ratio: 2 / 3;
+    max-height: 52svh;
+    /* slightly smaller than your 58svh */
+}
+/* ===========================
+   HOME SCREEN (V1)
+=========================== */
+
+/* Home + Setup should feel “app card centered” */
+.screen.home,
+.screen.setup {
+    min-height: 100svh;
+    padding: max(18px, env(safe-area-inset-top)) 16px max(18px, env(safe-area-inset-bottom));
+    box-sizing: border-box;
+}
+.home-shell {
+    width: min(94vw, 420px);
+    display: grid;
+    gap: 18px;
+    margin-top: 10px;
+}
+
+.home-header {
+    display: grid;
+    gap: 10px;
+    text-align: left;
+}
+
+.home-badge {
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
+    display: grid;
+    place-items: center;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+}
+
+.home-title {
+    margin: 0;
+    font-size: 30px;
+    letter-spacing: 0.2px;
+}
+
+.home-subtitle {
+    margin: 0;
+    color: var(--text-secondary);
+    line-height: 1.35;
+}
+
+.home-card {
+    border-radius: 18px;
+    background: rgba(20, 20, 24, 0.78);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    padding: 18px;
+    box-shadow: 0 16px 50px rgba(0, 0, 0, 0.38);
+    position: relative;
+    overflow: hidden;
+}
+
+.home-card::before {
+    content: "";
+    position: absolute;
+    inset: -40px -60px auto -60px;
+    height: 140px;
+    background: radial-gradient(circle at 30% 30%,
+            color-mix(in srgb, var(--accent-primary) 35%, transparent),
+            transparent 60%);
+    opacity: 0.9;
+    pointer-events: none;
+}
+
+.home-card__top {
+    display: grid;
+    gap: 4px;
+    margin-bottom: 14px;
+}
+
+.home-card__label {
+    font-weight: 800;
+    letter-spacing: 0.2px;
+}
+
+.home-card__hint {
+    color: var(--text-muted);
+    font-size: 14px;
+}
+
+.home-actions {
+    display: grid;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.btn {
+    width: 100%;
+    border-radius: 14px;
+    padding: 12px 14px;
+    font-weight: 800;
+    letter-spacing: 0.2px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--text-primary);
+}
+
+.btn:active {
+    transform: scale(0.99);
+}
+
+.btn-primary {
+    background: color-mix(in srgb, var(--accent-primary) 20%, rgba(255, 255, 255, 0.04));
+    border-color: color-mix(in srgb, var(--accent-primary) 45%, rgba(255, 255, 255, 0.12));
+}
+
+.btn-ghost {
+    background: transparent;
+    color: var(--accent-primary);
+    border-color: rgba(255, 255, 255, 0.14);
+}
+
+.home-footnote {
+    margin-top: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-muted);
+    font-size: 13px;
+}
+
+.home-footnote .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 999px;
+    background: var(--accent-primary);
+    opacity: 0.85;
+}
+
+.game-meta.chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.chipstat {
+    padding: 8px 12px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid var(--border-soft);
+    color: var(--text-secondary);
+    font-size: 13px;
+}
+
+.chipstat b {
+    color: var(--text-primary);
+    font-weight: 800;
+}
+.turn-line {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 2px;
+    font-size: 13px;
+    letter-spacing: 0.2px;
+    color: var(--text-secondary);
+    user-select: none;
+}
+
+.turn-label {
+    opacity: 0.7;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 11px;
+    letter-spacing: 0.9px;
+}
+
+.turn-name {
+    font-weight: 800;
+    color: var(--text-primary);
+}
+
+.turn-sep {
+    opacity: 0.35;
+}
+
