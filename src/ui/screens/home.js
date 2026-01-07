@@ -30,6 +30,9 @@ export function renderHome() {
         </div>
       </section>
     </div>
+
+    <button id="installBtn" style="display:none" onclick="doInstall()">Install</button>
+
   `;
 
   el.querySelector("#quickBtn").addEventListener("click", () => {
@@ -38,6 +41,10 @@ export function renderHome() {
 
   el.querySelector("#playersBtn").addEventListener("click", () => {
     dispatch({ type: OPEN_SETUP });
+  });
+
+  el.querySelector("#installBtn")?.addEventListener("click", () => {
+    window.doInstall();
   });
 
   return el;
